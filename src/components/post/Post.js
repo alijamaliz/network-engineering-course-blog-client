@@ -16,7 +16,11 @@ class Post extends Component {
     render() {
         return (
             <div style={styles.postCard}>
-                <img style={styles.image} src={this.props.post.image} alt='post' />
+                {this.props.post.image_path ? (
+                    <img style={styles.image} src={this.props.post.image_path} alt='post' />
+                ) : (
+                    undefined
+                )}
                 <h3 style={styles.title}>{this.props.post.title}</h3>
                 <h5 style={styles.description}>{this.props.post.description}</h5>
                 <div style={styles.metaContainer}>
