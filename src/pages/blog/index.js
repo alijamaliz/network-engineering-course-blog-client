@@ -1,19 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { getAllPosts } from '../../api/post';
+import { sendLongPollingRequest } from '../../api/long-polling';
 import PostList from '../../components/post/PostList';
 
-let requested = false;
+class Blog extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: []
+        };
+    }
 
-export default function Blog() {
-    const [posts, setPosts] = useState(0);
-    useEffect(() => {
-        if (!requested) {
-            requested = true;
-            getAllPosts()
-                .then(result => setPosts(result))
-                .catch(err => console.log(err));
-        }
-    });
+    componentDidMount() {
+        getAllPosts()
+            .then(result => this.setState({ posts: result }))
+            .catch(err => console.log(err));
 
-    return <PostList posts={posts} />;
+        this.initLongPollingRequest();
+    }
+    initLongPollingRequest = () => {
+        sendLongPollingRequest()
+            .then(result => {
+                const updatedPost = result.data;
+                if (result.type === 'NEW_POST') {
+                    this.setState({ posts: [...this.state.posts, updatedPost] });
+                } else if (result.type === 'LIKE_POST') {
+                    const index = this.state.posts.findIndex(post => post.id === updatedPost.id);
+                    this.state.posts.splice(index, 1, updatedPost);
+                    this.setState({ posts: [...this.state.posts] });
+                }
+                this.initLongPollingRequest();
+            })
+            .catch(err => console.log(err));
+    };
+    render() {
+        return <PostList posts={this.state.posts} />;
+    }
 }
+export default Blog;
