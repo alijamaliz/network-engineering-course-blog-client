@@ -25,3 +25,20 @@ export const likePost = async postId => {
             );
     });
 };
+
+export const createPost = async post => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API_BASE_URL}/posts/`, {
+            method: 'post',
+            body: JSON.stringify(post),
+            headers: { 'Content-type': 'application/json' }
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(
+                result => resolve(result),
+                error => reject(error)
+            );
+    });
+};
