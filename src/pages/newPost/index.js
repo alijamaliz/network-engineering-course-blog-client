@@ -35,9 +35,15 @@ class newPost extends React.Component {
                     marginLeft: 'auto',
                     marginRight: 'auto',
                     marginTop: 10,
-                    marginBottom: 10
+                    marginBottom: 10,
+                    backgroundColor: 'white',
+                    padding: 20,
+                    borderRadius: 5
                 }}
             >
+                <div style={{ fontWeight: 800, fontSize: 18, textAlign: 'center', marginBottom: 10 }}>
+                    New post
+                </div>
                 <div
                     style={{
                         width: '100%',
@@ -53,11 +59,13 @@ class newPost extends React.Component {
                         value={this.state.title}
                         onChange={event => this.setState({ title: event.target.value })}
                         style={{
-                            marginTop: 5,
+                            marginTop: 10,
                             borderRadius: 5,
                             border: 'none',
                             outline: 'none',
-                            padding: 5
+                            padding: 5,
+                            backgroundColor: '#efefef',
+                            fontSize: 16
                         }}
                     />
                 </div>
@@ -66,7 +74,7 @@ class newPost extends React.Component {
                         width: '100%',
                         display: 'flex',
                         flexDirection: 'column',
-                        paddingTop: 5,
+                        paddingTop: 10,
                         paddingBottom: 5
                     }}
                 >
@@ -77,13 +85,15 @@ class newPost extends React.Component {
                         onChange={event => this.setState({ description: event.target.value })}
                         style={{
                             width: width - 10,
-                            heght: 100,
+                            height: 100,
                             padding: 5,
+                            fontSize: 16,
                             resize: 'none',
                             border: 'none',
                             outline: 'none',
-                            marginTop: 5,
-                            borderRadius: 5
+                            marginTop: 10,
+                            borderRadius: 5,
+                            backgroundColor: '#efefef'
                         }}
                     />
                 </div>
@@ -95,10 +105,11 @@ class newPost extends React.Component {
                         color: 'white',
                         marginTop: 5,
                         marginBottom: 5,
-                        padding: 5,
+                        padding: 10,
                         borderRadius: 5,
                         fontWeight: 700,
-                        fontSize: 18
+                        fontSize: 18,
+                        cursor: 'pointer'
                     }}
                     type='submit'
                     value='Submit'
