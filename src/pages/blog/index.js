@@ -13,7 +13,7 @@ class Blog extends Component {
 
     componentDidMount() {
         getAllPosts()
-            .then(result => this.setState({ posts: result }))
+            .then(result => this.setState({ posts: result.reverse() }))
             .catch(err => console.log(err));
 
         this.initLongPollingRequest();
@@ -23,7 +23,7 @@ class Blog extends Component {
             .then(result => {
                 const updatedPost = result.data;
                 if (result.type === 'NEW_POST') {
-                    this.setState({ posts: [...this.state.posts, updatedPost] });
+                    this.setState({ posts: [updatedPost, ...this.state.posts] });
                 } else if (result.type === 'LIKE_POST') {
                     const index = this.state.posts.findIndex(post => post.id === updatedPost.id);
                     this.state.posts.splice(index, 1, updatedPost);
